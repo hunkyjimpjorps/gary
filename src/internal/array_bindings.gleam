@@ -66,7 +66,7 @@ pub fn sparse_foldl(f: fn(Int, a, b) -> b, acc: b, array: ErlangArray(a)) -> b
 pub fn default(array: ErlangArray(t)) -> t
 
 @external(erlang, "array", "size")
-pub fn size(array: ErlangArray(t)) -> t
+pub fn size(array: ErlangArray(t)) -> Int
 
 @external(erlang, "array", "is_fix")
 pub fn is_fix(array: ErlangArray(t)) -> Bool

@@ -1,6 +1,3 @@
-import gleam/dynamic
-import gleam/erlang/atom
-
 pub type ErlangArray(t)
 
 pub type ArrayOption {
@@ -32,10 +29,20 @@ pub fn to_list(array: ErlangArray(t)) -> List(t)
 @external(erlang, "array", "to_orddict")
 pub fn to_orddict(array: ErlangArray(t)) -> List(#(Int, t))
 
-// modify array content
+// get array info
 @external(erlang, "array", "get")
 pub fn get(index: Int, array: ErlangArray(t)) -> t
 
+@external(erlang, "array", "default")
+pub fn default(array: ErlangArray(t)) -> t
+
+@external(erlang, "array", "size")
+pub fn size(array: ErlangArray(t)) -> Int
+
+@external(erlang, "array", "is_fix")
+pub fn is_fix(array: ErlangArray(t)) -> Bool
+
+// modify array content
 @external(erlang, "array", "set")
 pub fn set(index: Int, value: t, array: ErlangArray(t)) -> ErlangArray(t)
 
@@ -60,16 +67,6 @@ pub fn foldl(f: fn(Int, a, b) -> b, acc: b, array: ErlangArray(a)) -> b
 
 @external(erlang, "array", "sparse_foldl")
 pub fn sparse_foldl(f: fn(Int, a, b) -> b, acc: b, array: ErlangArray(a)) -> b
-
-// get array info
-@external(erlang, "array", "default")
-pub fn default(array: ErlangArray(t)) -> t
-
-@external(erlang, "array", "size")
-pub fn size(array: ErlangArray(t)) -> Int
-
-@external(erlang, "array", "is_fix")
-pub fn is_fix(array: ErlangArray(t)) -> Bool
 
 // change the array's properties
 @external(erlang, "array", "fix")

@@ -1,4 +1,4 @@
-pub type ErlangArray(t)
+import gary.{type ErlangArray}
 
 pub type ArrayOption {
   Default

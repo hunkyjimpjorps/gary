@@ -29,6 +29,12 @@ pub fn to_list(array: ErlangArray(t)) -> List(t)
 @external(erlang, "array", "to_orddict")
 pub fn to_orddict(array: ErlangArray(t)) -> List(#(Int, t))
 
+@external(erlang, "array", "sparse_to_list")
+pub fn sparse_to_list(array: ErlangArray(t)) -> List(t)
+
+@external(erlang, "array", "sparse_to_orddict")
+pub fn sparse_to_orddict(array: ErlangArray(t)) -> List(#(Int, t))
+
 // get array info
 @external(erlang, "array", "get")
 pub fn get(index: Int, array: ErlangArray(t)) -> t
@@ -76,4 +82,7 @@ pub fn fix(array: ErlangArray(t)) -> ErlangArray(t)
 pub fn relax(array: ErlangArray(t)) -> ErlangArray(t)
 
 @external(erlang, "array", "resize")
-pub fn resize(size: Int, array: ErlangArray(t)) -> ErlangArray(t)
+pub fn resize_to(size: Int, array: ErlangArray(t)) -> ErlangArray(t)
+
+@external(erlang, "array", "resize")
+pub fn resize(array: ErlangArray(t)) -> ErlangArray(t)

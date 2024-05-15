@@ -109,7 +109,7 @@ pub fn set(
   at index: Int,
   put item: t,
 ) -> Result(ErlangArray(t), ArrayError) {
-  use <- bool.guard(index <= 0, Error(IndexOutOfRange))
+  use <- bool.guard(index < 0, Error(IndexOutOfRange))
   use <- bool.guard(
     is_fixed_size(array) && index >= get_size(array),
     Error(IndexOutOfRange),
@@ -124,7 +124,7 @@ pub fn drop(
   from array: ErlangArray(t),
   at index: Int,
 ) -> Result(ErlangArray(t), ArrayError) {
-  use <- bool.guard(index <= 0, Error(IndexOutOfRange))
+  use <- bool.guard(index < 0, Error(IndexOutOfRange))
   use <- bool.guard(
     is_fixed_size(array) && index >= get_size(array),
     Error(IndexOutOfRange),
@@ -196,7 +196,7 @@ pub fn sparse_fold_right(
 /// Returns `Error(IndexOutOfRange)` if the index is negative, or if it exceeds the 
 /// size of a fixed-size array.
 pub fn get(from array: ErlangArray(t), at index: Int) -> Result(t, ArrayError) {
-  use <- bool.guard(index <= 0, Error(IndexOutOfRange))
+  use <- bool.guard(index < 0, Error(IndexOutOfRange))
   use <- bool.guard(
     is_fixed_size(array) && index >= get_size(array),
     Error(IndexOutOfRange),

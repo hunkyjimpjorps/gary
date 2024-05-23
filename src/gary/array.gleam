@@ -51,12 +51,30 @@ pub fn create_fixed_size(
 
 /// Converts a list to an extensible sparse array, assigning list members to indices 
 /// starting at an index of 0.
+/// 
+/// ```
+/// ["trains", "planes", "automobiles"]
+/// |> list.map(option.Some)
+/// |> array.from_list(default: option.None)
+/// |> array.get(at: 1)
+/// // -> Ok(Some("planes"))
+/// ```
+/// 
 pub fn from_list(from list: List(t), default default: t) -> ErlangArray(t) {
   array_bindings.from_list(list, default)
 }
 
 /// Converts a `dict` with integer keys representing array indices to an extensible sparse array.  
 /// Returns `IndexOutOfRange` if any of the keys are negative.
+/// 
+/// ```
+/// [#(23, "Michael Jordan"), #(33, "Larry Bird"), #(73, "Dennis Rodman")]
+/// |> dict.from_list
+/// |> array.from_dict(default: "Unknown")
+/// |> result.try(array.get(from: _, at: 33))
+/// // -> Ok("Larry Bird")
+/// ```
+/// 
 pub fn from_dict(
   from dict: Dict(Int, t),
   default default: t,
@@ -75,6 +93,15 @@ pub fn from_dict(
 /// Converts the array's values to a list, in order from index 0 to the maximum,
 /// including the default value for any keys between 0 and
 /// the maximum that don't have values.
+/// 
+/// ```
+/// [#(0, "nada"), #(2, "company"), #(3, "a crowd"), #(5, "a carful")]
+/// |> dict.from_list
+/// |> array.from_dict(default: "something else")
+/// |> result.map(array.to_list)
+/// // -> Ok(["nada", "something else", "company", "a crowd", "something else", "a carful"])
+/// ```
+/// 
 pub fn to_list(array: ErlangArray(t)) -> List(t) {
   array_bindings.to_list(array)
 }
@@ -89,6 +116,15 @@ pub fn to_dict(array: ErlangArray(t)) -> Dict(Int, t) {
 
 /// Converts the array's values to a list, in order from lowest to highest index,
 /// omitting default values.
+/// 
+/// ```
+/// [#(0, "nada"), #(2, "company"), #(3, "a crowd"), #(5, "a carful")]
+/// |> dict.from_list
+/// |> array.from_dict(default: "something else")
+/// |> result.map(array.to_list)
+/// // -> Ok(["nada", "company", "a crowd", "a carful"])
+/// ```
+/// 
 pub fn to_list_without_defaults(array: ErlangArray(t)) -> List(t) {
   array_bindings.sparse_to_list(array)
 }
